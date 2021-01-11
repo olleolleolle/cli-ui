@@ -138,7 +138,7 @@ module CLI
         # Windows doesn't detect presses on the arrow keys when picking an option, so we don't show the instruction text
         # for them.
         with_os_mock_and_reload(CLI::UI::OS::Windows) do
-          # $stdin.getch event don't get captured usingIO.pipe,
+          # $stdin.getch event doesn't get captured using IO.pipe,
           # work around is to move the _run command into the test to include stubs
           $stdin = @in_r
           start_process do
