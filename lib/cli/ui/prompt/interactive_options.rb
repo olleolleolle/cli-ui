@@ -61,6 +61,7 @@ module CLI
           end
           @redraw = true
           @presented_options = []
+          @supports_arrow_keys = CLI::UI::OS.current.supports_arrow_keys?
         end
 
         # Calls the +InteractiveOptions+ and asks the question
@@ -335,7 +336,12 @@ module CLI
 
         def read_char
           raw_tty! do
-            getc = $stdin.getc
+            getc =
+              if @supports_arrow_keys
+                $stdin.getc
+              else
+                $stdin.getch
+              end
             getc ? getc.chr : :timeout
           end
         rescue IOError
